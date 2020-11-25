@@ -1,2 +1,4 @@
 ﻿  Core.cpp
+C:\Project_Sapce\Project_Space\Space\Core.cpp(57,43): warning C4244: '=': 'float'에서 'UINT'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Project_Sapce\Project_Space\Space\Core.cpp(58,44): warning C4244: '=': 'float'에서 'UINT'(으)로 변환하면서 데이터가 손실될 수 있습니다.
   Space.vcxproj -> C:\Project_Sapce\Project_Space\bin_debug\Space_debug32.exe

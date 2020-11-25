@@ -1,15 +1,18 @@
 #pragma once
 #define WIN32_LEAM_AND_MEAN		// 거의 사용되지 않는 내용을 Windows 헤더에서 제외
 
-#include <Windows.h>
-#include <iostream>
+#include "define.h"
 
 #include "Resource.h"
+#include "Core.h"
+
+HINSTANCE		hInst;
+HWND					g_hWnd;
 
 #define MAX_LOADSTRING 100
 
-WCHAR										szTitle[MAX_LOADSTRING];			// 제목 이름
-WCHAR										szWindowClass[MAX_LOADSTRING];	// 기본 창 클래스 이름
+WCHAR										szTitle[MAX_LOADSTRING] = {L"TT"};						// 제목 이름
+WCHAR										szWindowClass[MAX_LOADSTRING] = { L"TT" };	// 기본 창 클래스 이름
 
 ATOM											MyRegisterClass(HINSTANCE hInstance);
 BOOL											InitInstance(HINSTANCE, int);
@@ -17,15 +20,19 @@ LRESULT CALLBACK			WndProc(HWND, UINT, WPARAM, LPARAM);
 INT_PTR CALLBACK			About(HWND, UINT, WPARAM, LPARAM);
 
 
-int APIENTRY wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _In_ LPWSTR lpCmdLine, _In_ int nCmdShow)
+int APIENTRY wWinMain(_In_ HINSTANCE hInstance
+	, _In_opt_ HINSTANCE hPrevInstance
+	, _In_ LPWSTR lpCmdLine
+	, _In_ int nCmdShow)
 {
 	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
 	UNREFERENCED_PARAMETER(hPrevInstance);
 	UNREFERENCED_PARAMETER(lpCmdLine);
 
 	// 전역 문자열을 초기화합니다.
-	LoadStringW(hInstance, IDS_APP_TITLE, szTitle, MAX_LOADSTRING);
-	LoadStringW(hInstance, IDC_MY01CLIENT, szWindowClass, MAX_LOADSTRING);
+	//LoadStringW(hInstance, IDS_APP_TITLE, szTitle, MAX_LOADSTRING);
+	//LoadStringW(hInstance, IDC_MY01CLIENT, szWindowClass, MAX_LOADSTRING);
+
 	MyRegisterClass(hInstance);
 
 	if (!InitInstance(hInstance, nCmdShow))
@@ -34,6 +41,12 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance
 	}
 
 	HACCEL hAccelTable = LoadAccelerators(hInstance, MAKEINTRESOURCE(IDC_MY01CLIENT));
+
+	if (CCore::GetInst()->init(g_hWnd))
+	{
+		MessageBox(nullptr, L"엔진 초기화 실패", L"초기화 오류", MB_OK);
+		return 0;
+	}
 
 	MSG msg;
 
@@ -54,7 +67,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance
 		}
 		else
 		{
-
+			CCore::GetInst()->update();
 		}
 	}
 
@@ -66,29 +79,34 @@ ATOM MyRegisterClass(HINSTANCE hInstance)
 	WNDCLASSEXW wcex;
 
 	wcex.cbSize						= sizeof(WNDCLASSEXW);
+
 	wcex.style							= CS_HREDRAW | CS_VREDRAW;
+	wcex.lpfnWndProc			= WndProc;
 	wcex.cbClsExtra				= 0;
 	wcex.cbWndExtra				= 0;
 	wcex.hInstance					= hInstance;
 	wcex.hIcon							= LoadIcon(hInstance, MAKEINTRESOURCE(IDI_MY01CLIENT));
 	wcex.hCursor						= LoadCursor(nullptr, IDC_ARROW);
 	wcex.hbrBackground		= (HBRUSH)(COLOR_WINDOW + 1);
-	wcex.lpszMenuName		= nullptr;
+	wcex.lpszMenuName		= szTitle;
 	wcex.lpszClassName		= szWindowClass;
 	wcex.hIconSm					= LoadIcon(wcex.hInstance, MAKEINTRESOURCE(IDI_SMALL));
 
 	return RegisterClassExW(&wcex);
+
 }
 
 // Create global handle
-HINSTANCE		hInst;
-HWND					g_hWnd;
 BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
 {
 	hInst = hInstance;
+
 	g_hWnd = CreateWindowW(szWindowClass, szTitle, WS_OVERLAPPEDWINDOW, CW_USEDEFAULT, 0, CW_USEDEFAULT, 0, nullptr, nullptr, hInstance, nullptr);
 
-	if (!g_hWnd)		return FALSE;
+	if (!g_hWnd)
+	{
+		return FALSE;
+	}
 
 	ShowWindow(g_hWnd, nCmdShow);
 	UpdateWindow(g_hWnd);

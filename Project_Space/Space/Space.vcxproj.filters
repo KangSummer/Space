@@ -23,12 +23,30 @@
     <ClCompile Include="main.cpp">
       <Filter>소스 파일\Space_Client</Filter>
     </ClCompile>
+    <ClCompile Include="Timer.cpp">
+      <Filter>소스 파일\Space_Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="Device.cpp">
+      <Filter>소스 파일\Space_Engine</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Core.h">
       <Filter>소스 파일\Space_Engine</Filter>
     </ClInclude>
     <ClInclude Include="Resource.h">
+      <Filter>소스 파일\Space_Client</Filter>
+    </ClInclude>
+    <ClInclude Include="Timer.h">
+      <Filter>소스 파일\Space_Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="Device.h">
+      <Filter>소스 파일\Space_Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="define.h">
+      <Filter>소스 파일\Space_Client</Filter>
+    </ClInclude>
+    <ClInclude Include="struct.h">
       <Filter>소스 파일\Space_Client</Filter>
     </ClInclude>
   </ItemGroup>

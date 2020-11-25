@@ -75,21 +75,25 @@
     <LinkIncremental>true</LinkIncremental>
     <OutDir>$(SolutionDir)bin_debug\</OutDir>
     <TargetName>$(ProjectName)_debug32</TargetName>
+    <IncludePath>$(SolutionDir)Project\Include\;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
     <OutDir>$(SolutionDir)bin_release\</OutDir>
     <TargetName>$(ProjectName)_release32</TargetName>
+    <IncludePath>$(SolutionDir)Project\Include\;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
     <OutDir>$(SolutionDir)bin_debug\</OutDir>
     <TargetName>$(ProjectName)_debug64</TargetName>
+    <IncludePath>$(SolutionDir)Project\Include\;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
     <OutDir>$(SolutionDir)bin_release\</OutDir>
     <TargetName>$(ProjectName)_release64</TargetName>
+    <IncludePath>$(SolutionDir)Project\Include\;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -149,11 +153,17 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Core.cpp" />
+    <ClCompile Include="Device.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Timer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Core.h" />
+    <ClInclude Include="define.h" />
+    <ClInclude Include="Device.h" />
     <ClInclude Include="Resource.h" />
+    <ClInclude Include="struct.h" />
+    <ClInclude Include="Timer.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
